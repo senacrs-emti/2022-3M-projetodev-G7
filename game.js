@@ -48,9 +48,9 @@ scene("game", ({ level }) => {
 	const maps = [
 		[
 			"                             ",
-			"                        ==   ",
-			"                    =        ",
 			"                             ",
+			"                        ==   ",
+			"                     =       ",
 			"        ==     ==^         ^ ",
 			"<--------------------------->",
 		]
@@ -128,7 +128,7 @@ scene("game", ({ level }) => {
 		),
 		origin("center"),
 		"coin",
-	]);
+	]); 
 
 	for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
 		add([
@@ -222,7 +222,6 @@ scene("game", ({ level }) => {
 	});
 
 	keyDown("shift", () => {
-        player.flipX(-1);
 		player.smallify(3)
 	});
 
