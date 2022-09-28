@@ -110,7 +110,7 @@ scene("game", ({ level }) => {
 		{
 			speed: 160,
 			jumpForce: 340,
-			heart: 3,
+			heart: 5,
 		},
 	]);
 
@@ -189,7 +189,7 @@ scene("game", ({ level }) => {
 
 	function respawn() {
 		score.value = 0;
-		player.heart = 3;
+		player.heart = 5;
 		player.pos = vec2(0, 0);
 	}
 
