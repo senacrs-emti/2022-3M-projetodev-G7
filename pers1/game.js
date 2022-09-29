@@ -1,3 +1,5 @@
+const FLOOR_HEIGHT = 48
+
 kaboom({
 	fullscreen: true,
 	scale: 2,
@@ -6,12 +8,16 @@ kaboom({
 	clearColor: [0, 0, 0, 1],
 	global: true,
 });
+
+let isJumping = true
+
 loadSprite("bg", "testesprites/BG.png");
 
 loadSprite("ground-l", "testesprites/ground-l.png");
 loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
+loadSprite("pc", "testesprites/pc.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
 loadSprite("grass", "testesprites/grass_props.png");
 loadSprite("worm", "testesprites/worm_walk_anim.png", {
@@ -47,25 +53,25 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"                             ",
-			"                             ",
-			"                        ==   ",
-			"                     =       ",
-			"        ==     ==^         ^ ",
-			"<--------------------------->",
+			"-                                      	      						",
+			"-                           == =  =    	              	  			",
+			"-                       =              								",
+			"-    %  %       %  %    %%%%%%            %      	    	                ",
+			"<---------------------------->         <--->							",
 		]
 	];
 
 	const levelConfig = {
-		width: 31,
+		width: 32,
 		height: 32,
 		pos: vec2(0, height() - 78),
 		//"^": [sprite("space-invader"), scale(0.7), "space-invader"],
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"^": [sprite("grass"), "grass", "block", body()],
+		"%": [sprite("pc"), "pc", scale(1.2), solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
+		"$": [sprite("coin"), "coin"],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
@@ -120,32 +126,9 @@ scene("game", ({ level }) => {
 		}),
 		scale(1),
 		solid(),
-		pos(
-			map.getPos(
-				Math.floor(Math.random() * 20) + 1,
-				Math.floor(Math.random() + Math.floor(Math.random() * 4) + 1),
-			),
-		),
 		origin("center"),
 		"coin",
 	]); 
-
-	for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-		add([
-			sprite("crate"),
-			solid(),
-			scale(1),
-			pos(
-				map.getPos(
-					Math.floor(Math.random() * 20) + 1,
-					Math.random() + Math.floor(Math.random() * 3),
-				),
-			),
-			origin("center"),
-			"crate",
-			"block",
-		]);
-	}
 
 	const score = add([
 		text(`score: ${0}`, 18),
@@ -208,6 +191,7 @@ scene("game", ({ level }) => {
 	keyPress("space", () => {
 		if (player.grounded()) {
 			player.jump(player.jumpForce);
+			isJumping = true
 		}
 	});
 
