@@ -53,11 +53,11 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"-                                      	      						",
-			"-                           == =  =    	              	  			",
-			"-                       =              								",
-			"-    %  %       %  %    %%%%%%            %      	    	                ",
-			"<---------------------------->         <--->							",
+			"                                      	      					    ",
+			"                          == =  =    	              	  		    ",
+			"        $$  $  $   $   =              							    ",
+			"    %  %       %  %    %%%%%%          %      	    	            ",
+			"<---------------------------->       <--->					        ",
 		]
 	];
 
@@ -69,7 +69,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("pc"), "pc", scale(1.2), solid()],
+		"%": [sprite("pc"), "pc", solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("coin"), "coin"],
 	};
@@ -126,7 +126,6 @@ scene("game", ({ level }) => {
 		}),
 		scale(1),
 		solid(),
-		origin("center"),
 		"coin",
 	]); 
 
@@ -216,7 +215,8 @@ scene("game", ({ level }) => {
 
 	player.action(() => {
 		if (player.pos.y >= 800 || player.heart <= 0) {
-			respawn();
+			go("lose", score)
+			burp()
 		}
 	});
 
@@ -227,6 +227,11 @@ scene("game", ({ level }) => {
 	});
 
 	player.collides("worm", () => {
+		camShake(8);
+		player.heart--;
+	});
+
+	player.collides("pc", () => {
 		camShake(8);
 		player.heart--;
 	});
@@ -245,5 +250,21 @@ scene("game", ({ level }) => {
 		});
 	});
 });
+
+scene("lose", (score) => {
+
+	// display score
+	add([
+		text(score),
+		pos(width() / 2, height() / 2 + 80),
+		scale(2),
+		origin("center"),
+	])
+
+	// go back to game with space is pressed
+	onKeyPress("space", () => go("game"))
+	onClick(() => go("game"))
+
+})
 
 start("game", { level: 0 });
