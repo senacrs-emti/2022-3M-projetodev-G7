@@ -54,10 +54,13 @@ scene("game", ({ level }) => {
 	const maps = [
 		[
 			"                                      	      					    ",
-			"                          == =  =    	              	  		    ",
-			"        $$  $  $   $   =              							    ",
-			"    %  %       %  %    %%%%%%          %      	    	            ",
-			"<---------------------------->       <--->					        ",
+			"                                      	      					    ",
+			"                                      	      					    ",
+			"           =                           	      					    ",
+			"         =    =            = = =      	              	  		    ",
+			"       =   $  $   $   =  =        =    							    ",
+			"     =        %  %    %%%%%%         = %    <-->  	    	            ",
+			"<-->  <----------------------->       <--->					        ",
 		]
 	];
 
@@ -251,12 +254,16 @@ scene("game", ({ level }) => {
 
 });
 
-scene("lose", (center) => {
+scene("lose", () => {
+
 	add([
-		text("Game Over"),
-		pos(center()),
+		text("Game Over - CTRL+R to Play Again"),
+		pos(width() - 300, 160),
 		origin("center"),
 	])
+
+
+
 })
 
 start("game", { level: 0 });
