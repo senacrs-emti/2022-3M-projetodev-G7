@@ -215,8 +215,7 @@ scene("game", ({ level }) => {
 
 	player.action(() => {
 		if (player.pos.y >= 800 || player.heart <= 0) {
-			go("lose", score)
-			burp()
+			go("lose")
 		}
 	});
 
@@ -249,22 +248,15 @@ scene("game", ({ level }) => {
 			worm.speed = -worm.speed;
 		});
 	});
+
 });
 
-scene("lose", (score) => {
-
-	// display score
+scene("lose", (center) => {
 	add([
-		text(score),
-		pos(width() / 2, height() / 2 + 80),
-		scale(2),
+		text("Game Over"),
+		pos(center()),
 		origin("center"),
 	])
-
-	// go back to game with space is pressed
-	onKeyPress("space", () => go("game"))
-	onClick(() => go("game"))
-
 })
 
 start("game", { level: 0 });
