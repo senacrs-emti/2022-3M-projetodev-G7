@@ -1,4 +1,5 @@
 const FLOOR_HEIGHT = 48
+const speed = 620
 
 kaboom({
 	fullscreen: true,
@@ -53,14 +54,14 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"                                      	      					    ",
-			"                                      	      					    ",
-			"                                      	      					    ",
-			"           =                           	      					    ",
-			"         =    =            = = =      	              	  		    ",
-			"       =   $  $   $   =  =        =    							    ",
-			"     =        %  %    %%%%%%         = %    <-->  	    	            ",
-			"<-->  <----------------------->       <--->					        ",
+			"                                      	                           ",
+			"                                      	                           ",
+			"                                                                  ",
+			"           $   $              $          	                       ",
+			"         =    =       $     =   =     $ 	              	  	   ",
+			"       =          $   =  =        =    	=	=    =              ",
+			"             %  %     = %% %%%         %           <-->           ",
+			"<-->  <----------------------->      <---->                       ",
 		]
 	];
 
@@ -68,7 +69,6 @@ scene("game", ({ level }) => {
 		width: 32,
 		height: 32,
 		pos: vec2(0, height() - 78),
-		//"^": [sprite("space-invader"), scale(0.7), "space-invader"],
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
@@ -141,25 +141,6 @@ scene("game", ({ level }) => {
 		{ value: 0 },
 	]);
 
-	let worms = [];
-	for (let i = 0; i < Math.floor(Math.random() * 15) + 1; i++) {
-		worms.push(
-			add([
-				sprite("worm", {
-					animSpeed: 0.1,
-				}),
-				scale(1),
-				pos(map.getPos(Math.floor(Math.random() * 20) + 1, 5)),
-				body(),
-				origin("center"),
-				{
-					speed: 10,
-				},
-				"worm",
-			]),
-		);
-	}
-
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
 		text(player.heart, 16),
@@ -228,28 +209,9 @@ scene("game", ({ level }) => {
 		score.text = `score: ${score.value}`;
 	});
 
-	player.collides("worm", () => {
-		camShake(8);
-		player.heart--;
-	});
-
 	player.collides("pc", () => {
 		camShake(8);
 		player.heart--;
-	});
-
-	worms.forEach((worm) => {
-		worm.action(() => {
-			worm.move(worm.speed, 0);
-			if (worm.curAnim() !== "run") {
-				worm.play("run");
-			}
-		});
-
-		worm.collides("block", () => {
-			worm.flipX(-1);
-			worm.speed = -worm.speed;
-		});
 	});
 
 });
