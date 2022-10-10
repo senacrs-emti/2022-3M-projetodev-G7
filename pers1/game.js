@@ -21,13 +21,7 @@ loadSprite("crate", "testesprites/Crate.png");
 loadSprite("pc", "testesprites/pc.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
 loadSprite("grass", "testesprites/grass_props.png");
-loadSprite("worm", "testesprites/worm_walk_anim.png", {
-	sliceX: 6,
-	sliceY: 1,
-	anims: {
-		run: { from: 0, to: 5 },
-	},
-});
+
 loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
 	sliceX: 6,
 	sliceY: 1,
@@ -35,13 +29,12 @@ loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
 		idle: { from: 0, to: 5 },
 	},
 });
-loadSprite("dino", "testesprites/DinoSprites - mort.png", {
-	sliceX: 24,
+loadSprite("dino", "testesprites/sandro.png", {
+	sliceX: 0,
 	sliceY: 1,
 	anims: {
 		idle: { from: 0, to: 2 },
-		run: { from: 19, to: 23 },
-		dead: { from: 11, to: 16 },
+		run: { from: 0, to: 2 },
 	},
 });
 
@@ -54,14 +47,22 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"                                      	                           ",
-			"                                      	                           ",
-			"                                                                  ",
-			"           $   $              $          	                       ",
-			"         =    =       $     =   =     $ 	              	  	   ",
-			"       =          $   =  =        =    	=	=    =              ",
-			"             %  %     = %% %%%         %           <-->           ",
-			"<-->  <----------------------->      <---->                       ",
+			"                                      	                            	         ",
+			"                                      	                            	         ",
+			"                                                                   	         ",
+			"           $   $              $          	                        	         ",
+			"         =    =       $     =   =     $ 	              	  	    	         ",
+			"       =          $   =  =        =    	=	=    =               	         ",
+			"             %  %     = %% %%%         %           <-->            	         ",
+			"<-->  <----------------------->      <---->                        	         ",
+			"                                                         <---->          	     ",
+			"                                                                    	         ",
+			"                                                                        <---->  ",
+			"                                                                   	         ",
+			"                                                                  	       <->   ",
+			"                                                                   	         ",
+			"                                                                   	         ",
+			
 		]
 	];
 
