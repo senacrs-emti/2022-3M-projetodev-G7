@@ -30,11 +30,11 @@ loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
 	},
 });
 loadSprite("dino", "testesprites/sandro.png", {
-	sliceX: 0,
+	sliceX: 1,
 	sliceY: 2,
 	anims: {
-		idle: { from: 0, to: 2 },
-		run: { from: 0, to: 2 },
+		idle: { from: 0, to: 0 },
+		run: { from: 0, to: 1.5, loop: true },
 	},
 });
 
@@ -110,9 +110,9 @@ scene("game", ({ level }) => {
 
 	const player = add([
 		sprite("dino", {
-			animSpeed: 0.1,
+			animSpeed: 0.2,
 		}),
-		scale(1.4),
+		scale(1.0),
 		small(),
 		pos(map.getPos(2, -4)),
 		body(),
