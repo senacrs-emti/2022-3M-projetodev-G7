@@ -29,7 +29,7 @@ loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
 		idle: { from: 0, to: 5 },
 	},
 });
-loadSprite("dino", "testesprites/sandro.png", {
+loadSprite("dino", "testesprites/dondos.png", {
 	sliceX: 1,
 	sliceY: 2,
 	anims: {
@@ -57,9 +57,9 @@ scene("game", ({ level }) => {
 			"<-->  <----------------------->      <---->                        	         ",
 			"                                                         <---->          	     ",
 			"                                                                    	         ",
-			"                                                                        <---->  ",
+			"                                                                    <---->      ",
 			"                                                                   	         ",
-			"                                                                  	       <->   ",
+			"                                                                  	        <->	  ",
 			"                                                                   	         ",
 			"                                                                   	         ",
 			
@@ -118,8 +118,8 @@ scene("game", ({ level }) => {
 		body(),
 		origin("center"),
 		{
-			speed: 160,
-			jumpForce: 340,
+			speed: 180,
+			jumpForce: 360,
 			heart: 5,
 		},
 	]);
