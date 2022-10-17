@@ -31,7 +31,7 @@ loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
 });
 loadSprite("dino", "testesprites/sandro.png", {
 	sliceX: 0,
-	sliceY: 1,
+	sliceY: 2,
 	anims: {
 		idle: { from: 0, to: 2 },
 		run: { from: 0, to: 2 },
