@@ -204,8 +204,11 @@ scene("game", ({ level }) => {
 		}
 	});
 
+
 	player.collides("coin", (b) => {
 		destroy(b);
+		player.speed = +560;
+		timer = 1;
 		score.value += 10;
 		score.text = `score: ${score.value}`;
 	});
