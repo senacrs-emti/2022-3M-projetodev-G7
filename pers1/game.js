@@ -22,12 +22,14 @@ loadSprite("pc", "testesprites/pc.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
 loadSprite("grass", "testesprites/grass_props.png");
 
-loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
-	sliceX: 6,
-	sliceY: 1,
+loadSprite("frango", "testesprites/frango.png", {
+	sliceX: 1.7,
 	anims: {
-		idle: { from: 0, to: 5 },
+		idle: { from: 1.7, to: 1 },
+		speed: 4,
+		loop: true,
 	},
+	
 });
 loadSprite("dino", "testesprites/dondos.png", {
 	sliceX: 1,
@@ -50,8 +52,8 @@ scene("game", ({ level }) => {
 			"                                      	                            	         ",
 			"                                      	                            	         ",
 			"                                                                   	         ",
-			"           $   $              $          	                        	         ",
-			"         =    =       $     =   =     $ 	              	  	    	         ",
+			"            $    $              $          	                        	     ",
+			"          =     =       $     =   =     $ 	              	  	    	         ",
 			"       =          $   =  =        =    	=	=    =               	         ",
 			"             %  %     = %% %%%         %           <-->            	         ",
 			"<-->  <----------------------->      <---->                        	         ",
@@ -75,7 +77,7 @@ scene("game", ({ level }) => {
 		">": [sprite("ground-r"), "block", solid()],
 		"%": [sprite("pc"), "pc", solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
-		"$": [sprite("coin"), "coin"],
+		"$": [sprite("frango"), "frango"],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
@@ -110,7 +112,7 @@ scene("game", ({ level }) => {
 
 	const player = add([
 		sprite("dino", {
-			animSpeed: 0.2,
+			animSpeed: 0.1,
 		}),
 		scale(1.0),
 		small(),
@@ -124,17 +126,18 @@ scene("game", ({ level }) => {
 		},
 	]);
 
-	const coin = add([
-		sprite("coin", {
+	const frango = add([
+		sprite("frango", {
 			animSpeed: 0.1,
 		}),
-		scale(1),
+		scale(0.1),
 		solid(),
-		"coin",
+		"frango",
 	]); 
 
+
 	const score = add([
-		text(`score: ${0}`, 18),
+		text(`frangos: ${0}`, 14),
 		color(rgb(0, 0, 0)),
 		layer("ui"),
 		pos(width() - 86, 24),
@@ -152,7 +155,7 @@ scene("game", ({ level }) => {
 	]);
 
 	player.play("idle");
-	coin.play("idle");
+	frango.play("idle");
 
 	function respawn() {
 		score.value = 0;
@@ -205,12 +208,11 @@ scene("game", ({ level }) => {
 	});
 
 
-	player.collides("coin", (b) => {
+	player.collides("frango", (b) => {
 		destroy(b);
-		player.speed = +560;
-		timer = 1;
+		timer(5, (player.speed = 280), (timer) => void), (timer) => TimerComp,
 		score.value += 10;
-		score.text = `score: ${score.value}`;
+		score.text = `frangos: ${score.value}`;
 	});
 
 	player.collides("pc", () => {

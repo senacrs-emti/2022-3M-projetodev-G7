@@ -14,6 +14,7 @@ loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
 loadSprite("grass", "testesprites/grass_props.png");
+loadSprite("frango", "testesprites/frango.png");
 loadSprite("worm", "testesprites/worm_walk_anim.png", {
 	sliceX: 6,
 	sliceY: 1,
@@ -21,7 +22,7 @@ loadSprite("worm", "testesprites/worm_walk_anim.png", {
 		run: { from: 0, to: 5 },
 	},
 });
-loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
+loadSprite("frango", "testesprites/frango.png", {
 	sliceX: 6,
 	sliceY: 1,
 	anims: {
@@ -114,8 +115,8 @@ scene("game", ({ level }) => {
 		},
 	]);
 
-	const coin = add([
-		sprite("coin", {
+	const frango = add([
+		sprite("frango", {
 			animSpeed: 0.1,
 		}),
 		scale(1),
@@ -127,7 +128,7 @@ scene("game", ({ level }) => {
 			),
 		),
 		origin("center"),
-		"coin",
+		"frango",
 	]); 
 
 	for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
@@ -185,7 +186,7 @@ scene("game", ({ level }) => {
 	]);
 
 	player.play("idle");
-	coin.play("idle");
+	frango.play("idle");
 
 	function respawn() {
 		score.value = 0;
@@ -236,7 +237,7 @@ scene("game", ({ level }) => {
 		}
 	});
 
-	player.collides("coin", (b) => {
+	player.collides("frango", (b) => {
 		destroy(b);
 		score.value += 10;
 		score.text = `score: ${score.value}`;
