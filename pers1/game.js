@@ -210,7 +210,6 @@ scene("game", ({ level }) => {
 
 	player.collides("frango", (b) => {
 		destroy(b);
-		timer(5, (player.speed = 280), (timer) => void), (timer) => TimerComp,
 		score.value += 10;
 		score.text = `frangos: ${score.value}`;
 	});
@@ -224,12 +223,33 @@ scene("game", ({ level }) => {
 
 scene("lose", () => {
 
+
+	const btn = {
+		go,
+		text,
+		add,
+		onClick,
+		width,
+		origin,
+
+	}
+
 	add([
 		text("Game Over - CTRL+R to Play Again"),
 		pos(width() - 300, 160),
 		origin("center"),
 	])
 
+	
+	add([
+		text("Tentar de novo?"),
+		pos(335, 250),
+		origin("center"),
+	])
+
+	onClick(() => {
+		game();
+	});
 
 
 })
