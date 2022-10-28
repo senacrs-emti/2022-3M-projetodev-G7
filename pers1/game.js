@@ -223,35 +223,11 @@ scene("game", ({ level }) => {
 
 scene("lose", () => {
 
-
-	const btn = {
-		go,
-		text,
-		add,
-		onClick,
-		width,
-		origin,
-
-	}
-
 	add([
-		text("Game Over - CTRL+R to Play Again"),
+		text("Game Over - CTRL+R para Jogar de Novo!"),
 		pos(width() - 300, 160),
 		origin("center"),
 	])
-
-	
-	add([
-		text("Tentar de novo?"),
-		pos(335, 250),
-		origin("center"),
-	])
-
-	onClick(() => {
-		game();
-	});
-
-
 })
 
 start("game", { level: 0 });
