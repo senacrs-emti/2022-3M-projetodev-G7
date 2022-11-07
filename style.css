@@ -9,7 +9,7 @@ body {
     font-size: 14px;
     min-height: 100vh;
     width: 100%;
-    background-color: #7817d9;
+    background: url(./images/bk.jpg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,8 +31,6 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 180px 1fr auto;
-    border-radius: 20px;
-
 }
 
 .card-body,
@@ -50,7 +48,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url(./images/fundo.png);
+    background: url(./images/bk1.jpg);
     background-size: cover;
 }
 
@@ -67,23 +65,28 @@ body {
 
 
 .card {
-    box-shadow: 0 15px 30px -10px rgb(0, 0, 0);
+    box-shadow: 0 15px 30px -10px #000;
     cursor: pointer;
 }
 
 .card:hover {
-    box-shadow: 4px 4px 25px rgba(151, 151, 151, 0.2);
+    box-shadow: 4px 4px 25px rgba(0, 0, 0, 0.2);
 }
 
 .card:nth-child(2) .card-image {
-    background: url(./images/cafe.png);
+    background: url(./images/bk2.jpg);
 }
 
 .card:nth-child(3) .card-image {
-    background: url(./images/room.png);
+    background: url(./images/bk3.jpg);
+}
+
+.card:nth-child(4) .card-image {
+    background: url(./images/bk4.jpg);
 }
 
 .card-body {
+    background: #fff;
     padding: 20px 28px;
 }
 
@@ -97,7 +100,7 @@ body {
 }
 
 .card-body p {
-    color: rgb(255, 255, 255);
+    color: gray;
     font-size: 1.1em;
     line-height: 20px;
     text-align: center;
@@ -138,9 +141,11 @@ body {
     background: #f6b10f;
 }
 .card:nth-child(3) .card-footer {
-    background: #499292;
+    background: #959595;
 }
-
+.card:nth-child(4) .card-footer {
+    background: #9e5161;
+}
 
 .card:nth-child(1) .power {
     color: #4891ba;
@@ -149,9 +154,11 @@ body {
     color: #f6b10f;
 }
 .card:nth-child(3) .power {
-    color: #499292;
+    color: #959595;
 }
-
+.card:nth-child(4) .power {
+    color: #9e5161;
+}
 
 .selector {
     position: absolute;
@@ -160,13 +167,13 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 20px;
+    border-radius: 18px;
 
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transition: opacity 0.9s;
+    transition: opacity 0.5s;
 }
 
 .card:hover .selector {
@@ -175,7 +182,7 @@ body {
 
 .selector button {
     background-color: #4891ba;
-    color: rgb(0, 0, 0);
+    color: #fff;
     outline: none;
     border: 2px solid currentColor;
     cursor: pointer;
@@ -197,8 +204,9 @@ body {
     background-color: #f6b10f;
 }
 .card:nth-child(3) .selector button {
-    background-color: #499292;
+    background-color: #959595;
 }
 .card:nth-child(4) .selector button {
     background-color: #9e5161;
 }
+
