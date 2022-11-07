@@ -20,7 +20,6 @@ loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
 loadSprite("pc", "testesprites/pc.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
-loadSprite("grass", "testesprites/grass_props.png");
 
 loadSprite("gatinhos", "testesprites/gatinhos.png", {
 	sliceX: 3,
@@ -31,7 +30,7 @@ loadSprite("gatinhos", "testesprites/gatinhos.png", {
 	},
 	
 });
-loadSprite("dino", "testesprites/sandro.png", {
+loadSprite("sandro", "testesprites/sandro.png", {
 	sliceX: 2,
 	sliceY: 0,
 	anims: {
@@ -83,7 +82,7 @@ scene("game", ({ level }) => {
 	const map = addLevel(maps[level], levelConfig);
 
 	const player = add([
-		sprite("dino", {
+		sprite("sandro", {
 			animSpeed: 0.1,
 		}),
 		scale(1.0),

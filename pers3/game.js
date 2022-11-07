@@ -1,3 +1,6 @@
+const FLOOR_HEIGHT = 48
+const speed = 620
+
 kaboom({
 	fullscreen: true,
 	scale: 2,
@@ -6,36 +9,33 @@ kaboom({
 	clearColor: [0, 0, 0, 1],
 	global: true,
 });
+
+let isJumping = true
+
 loadSprite("bg", "testesprites/BG.png");
 
 loadSprite("ground-l", "testesprites/ground-l.png");
 loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
+loadSprite("pc", "testesprites/pc.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
-loadSprite("grass", "testesprites/grass_props.png");
-loadSprite("frango", "testesprites/frango.png");
-loadSprite("worm", "testesprites/worm_walk_anim.png", {
-	sliceX: 6,
-	sliceY: 1,
-	anims: {
-		run: { from: 0, to: 5 },
-	},
-});
+
 loadSprite("frango", "testesprites/frango.png", {
-	sliceX: 6,
-	sliceY: 1,
+	sliceX: 1,
 	anims: {
-		idle: { from: 0, to: 5 },
+		idle: { from: 3, to: 0 },
+		speed: 4,
+		loop: true,
 	},
+	
 });
-loadSprite("dino", "testesprites/DinoSprites - mort.png", {
-	sliceX: 24,
-	sliceY: 1,
+loadSprite("dondos", "testesprites/dondos.png", {
+	sliceX: 2,
+	sliceY: 0,
 	anims: {
-		idle: { from: 0, to: 2 },
-		run: { from: 19, to: 23 },
-		dead: { from: 11, to: 16 },
+		idle: { from: 0, to: 0 },
+		run: { from: 0, to: 1, loop: true },
 	},
 });
 
@@ -44,74 +44,55 @@ scene("game", ({ level }) => {
 	layers(["bg", "obj", "ui"], "obj");
 	camIgnore(["ui", "bg"]);
 
-	add([sprite("bg"), scale(width() / 1000, height() / 750), layer("bg")]);
+	add([sprite("bg"), scale(width() / 1600, height() / 900), layer("bg")]);
 
 	const maps = [
 		[
-			"                             ",
-			"                             ",
-			"                        ==   ",
-			"                     =       ",
-			"        ==     ==^         ^ ",
-			"<--------------------------->",
+			"                                      	                            	         ",
+			"                                      	                            	         ",
+			"                                                                   	         ",
+			"            $    $              $          	                        	     ",
+			"          =    =       $     =   =     $ 	              	  	    	         ",
+			"       =          $   =  =        =    	=	=    =               	         ",
+			"             %  %     = %% %%%         %           <-->            	         ",
+			"<-->  <----------------------->      <---->                        	         ",
+			"                                                         <---->          	     ",
+			"                                                                    	         ",
+			"                                                                    <---->      ",
+			"                                                                   	         ",
+			"                                                                  	        <->	 ",
+			"                                                                   	         ",
+			"                                                                   	         ",
+			
 		]
 	];
 
 	const levelConfig = {
-		width: 31,
+		width: 32,
 		height: 32,
 		pos: vec2(0, height() - 78),
-		//"^": [sprite("space-invader"), scale(0.7), "space-invader"],
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"^": [sprite("grass"), "grass", "block", body()],
+		"%": [sprite("pc"), "pc", solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
+		"$": [sprite("frango"), "frango", scale(0.8)],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
 
-	function small() {
-		let timer = 0
-		let isSmall= false
-		return {
-		  update() {
-			if (isSmall) {
-			  timer -=dt()
-			  if (timer <=0) {
-				this.normalify()
-			  }
-			}
-		  },
-		  isBig() {
-			return isSmall
-		  },
-		  smallify(time) {
-			this.scale = 0.8
-			timer = time
-			isSmall = true
-		  },
-		  normalify() {
-			this.scale = 1.4
-			timer = 0
-			isSmall = false
-		  },
-		}
-	  }
-
 	const player = add([
-		sprite("dino", {
+		sprite("dondos", {
 			animSpeed: 0.1,
 		}),
-		scale(1.4),
-		small(),
+		scale(0.8),
 		pos(map.getPos(2, -4)),
 		body(),
 		origin("center"),
 		{
-			speed: 100,
-			jumpForce: 340,
-			heart: 6,
+			speed: 125,
+			jumpForce: 360,
+			heart: 5,
 		},
 	]);
 
@@ -119,67 +100,25 @@ scene("game", ({ level }) => {
 		sprite("frango", {
 			animSpeed: 0.1,
 		}),
-		scale(1),
+		scale(0.1),
 		solid(),
-		pos(
-			map.getPos(
-				Math.floor(Math.random() * 20) + 1,
-				Math.floor(Math.random() + Math.floor(Math.random() * 4) + 1),
-			),
-		),
-		origin("center"),
 		"frango",
 	]); 
 
-	for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-		add([
-			sprite("crate"),
-			solid(),
-			scale(1),
-			pos(
-				map.getPos(
-					Math.floor(Math.random() * 20) + 1,
-					Math.random() + Math.floor(Math.random() * 3),
-				),
-			),
-			origin("center"),
-			"crate",
-			"block",
-		]);
-	}
 
 	const score = add([
-		text(`score: ${0}`, 18),
-		color(rgb(0, 0, 0)),
+		text(`FRANGOS: ${0}`, 14),
+		color(rgb(250, 249, 247)),
 		layer("ui"),
 		pos(width() - 86, 24),
 		origin("center"),
 		{ value: 0 },
 	]);
 
-	let worms = [];
-	for (let i = 0; i < Math.floor(Math.random() * 15) + 1; i++) {
-		worms.push(
-			add([
-				sprite("worm", {
-					animSpeed: 0.1,
-				}),
-				scale(1),
-				pos(map.getPos(Math.floor(Math.random() * 20) + 1, 5)),
-				body(),
-				origin("center"),
-				{
-					speed: 10,
-				},
-				"worm",
-			]),
-		);
-	}
-
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
 		text(player.heart, 16),
-		color(rgb(0, 0, 0)),
+		color(rgb(250, 249, 247)),
 		layer("ui"),
 		pos(56, 30),
 		origin("center"),
@@ -188,11 +127,6 @@ scene("game", ({ level }) => {
 	player.play("idle");
 	frango.play("idle");
 
-	function respawn() {
-		score.value = 0;
-		player.heart = 6;
-		player.pos = vec2(0, 0);
-	}
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {
@@ -209,6 +143,7 @@ scene("game", ({ level }) => {
 	keyPress("space", () => {
 		if (player.grounded()) {
 			player.jump(player.jumpForce);
+			isJumping = true
 		}
 	});
 
@@ -222,10 +157,6 @@ scene("game", ({ level }) => {
 		player.move(player.speed, 0);
 	});
 
-	keyDown("shift", () => {
-		player.smallify(3)
-	});
-
 	player.action(() => {
 		camPos(player.pos);
 		heart.text = player.heart
@@ -233,34 +164,32 @@ scene("game", ({ level }) => {
 
 	player.action(() => {
 		if (player.pos.y >= 800 || player.heart <= 0) {
-			respawn();
+			go("lose")
 		}
 	});
 
+
 	player.collides("frango", (b) => {
 		destroy(b);
-		score.value += 10;
-		score.text = `score: ${score.value}`;
+		score.value += 1;
+		score.text = `FRANGOS: ${score.value}`;
 	});
 
-	player.collides("worm", () => {
+	player.collides("pc", () => {
 		camShake(8);
 		player.heart--;
 	});
 
-	worms.forEach((worm) => {
-		worm.action(() => {
-			worm.move(worm.speed, 0);
-			if (worm.curAnim() !== "run") {
-				worm.play("run");
-			}
-		});
-
-		worm.collides("block", () => {
-			worm.flipX(-1);
-			worm.speed = -worm.speed;
-		});
-	});
 });
+
+scene("lose", () => {
+	
+	add([
+		text("Game Over - CTRL+R para Jogar de Novo!"),
+		pos(width() - 300, 160),
+		origin("center"),
+	])
+
+})
 
 start("game", { level: 0 });
