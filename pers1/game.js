@@ -82,40 +82,11 @@ scene("game", ({ level }) => {
 
 	const map = addLevel(maps[level], levelConfig);
 
-	function small() {
-		let timer = 0
-		let isSmall= false
-		return {
-		  update() {
-			if (isSmall) {
-			  timer -=dt()
-			  if (timer <=0) {
-				this.normalify()
-			  }
-			}
-		  },
-		  isBig() {
-			return isSmall
-		  },
-		  smallify(time) {
-			this.scale = 0.8
-			timer = time
-			isSmall = true
-		  },
-		  normalify() {
-			this.scale = 1.4
-			timer = 0
-			isSmall = false
-		  },
-		}
-	  }
-
 	const player = add([
 		sprite("dino", {
 			animSpeed: 0.1,
 		}),
 		scale(1.0),
-		small(),
 		pos(map.getPos(2, -4)),
 		body(),
 		origin("center"),
@@ -157,11 +128,6 @@ scene("game", ({ level }) => {
 	player.play("idle");
 	gatinhos.play("idle");
 
-	function respawn() {
-		score.value = 0;
-		player.heart = 5;
-		player.pos = vec2(0, 0);
-	}
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {
@@ -192,10 +158,6 @@ scene("game", ({ level }) => {
 		player.move(player.speed, 0);
 	});
 
-	keyDown("shift", () => {
-		player.smallify(3)
-	});
-
 	player.action(() => {
 		camPos(player.pos);
 		heart.text = player.heart
@@ -222,14 +184,12 @@ scene("game", ({ level }) => {
 });
 
 scene("lose", () => {
-
+	
 	add([
 		text("Game Over - CTRL+R para Jogar de Novo!"),
 		pos(width() - 300, 160),
 		origin("center"),
 	])
-
-	
 
 })
 
