@@ -61,7 +61,7 @@ scene("game", ({ level }) => {
 			"                                                                    	         ",
 			"                                                                    <---->      ",
 			"                                                                   	         ",
-			"                                                                  	        <->	  ",
+			"                                                                  	        <->	 ",
 			"                                                                   	         ",
 			"                                                                   	         ",
 			
@@ -210,7 +210,7 @@ scene("game", ({ level }) => {
 
 	player.collides("gatinhos", (b) => {
 		destroy(b);
-		score.value += 10;
+		score.value += 1;
 		score.text = `GATINHOS: ${score.value}`;
 	});
 
@@ -228,6 +228,8 @@ scene("lose", () => {
 		pos(width() - 300, 160),
 		origin("center"),
 	])
+
+	
 
 })
 
