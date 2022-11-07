@@ -22,21 +22,21 @@ loadSprite("pc", "testesprites/pc.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
 loadSprite("grass", "testesprites/grass_props.png");
 
-loadSprite("frango", "testesprites/frango.png", {
-	sliceX: 1.7,
+loadSprite("gatinhos", "testesprites/gatinhos.png", {
+	sliceX: 3,
 	anims: {
-		idle: { from: 1.7, to: 1 },
+		idle: { from: 3, to: 0 },
 		speed: 4,
 		loop: true,
 	},
 	
 });
-loadSprite("dino", "testesprites/dondos.png", {
-	sliceX: 1,
-	sliceY: 2,
+loadSprite("dino", "testesprites/sandro.png", {
+	sliceX: 2,
+	sliceY: 0,
 	anims: {
 		idle: { from: 0, to: 0 },
-		run: { from: 0, to: 1.5, loop: true },
+		run: { from: 0, to: 1, loop: true },
 	},
 });
 
@@ -45,7 +45,7 @@ scene("game", ({ level }) => {
 	layers(["bg", "obj", "ui"], "obj");
 	camIgnore(["ui", "bg"]);
 
-	add([sprite("bg"), scale(width() / 1000, height() / 750), layer("bg")]);
+	add([sprite("bg"), scale(width() / 1600, height() / 900), layer("bg")]);
 
 	const maps = [
 		[
@@ -53,7 +53,7 @@ scene("game", ({ level }) => {
 			"                                      	                            	         ",
 			"                                                                   	         ",
 			"            $    $              $          	                        	     ",
-			"          =     =       $     =   =     $ 	              	  	    	         ",
+			"          =    =       $     =   =     $ 	              	  	    	         ",
 			"       =          $   =  =        =    	=	=    =               	         ",
 			"             %  %     = %% %%%         %           <-->            	         ",
 			"<-->  <----------------------->      <---->                        	         ",
@@ -77,7 +77,7 @@ scene("game", ({ level }) => {
 		">": [sprite("ground-r"), "block", solid()],
 		"%": [sprite("pc"), "pc", solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
-		"$": [sprite("frango"), "frango"],
+		"$": [sprite("gatinhos"), "gatinhos"],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
@@ -120,25 +120,25 @@ scene("game", ({ level }) => {
 		body(),
 		origin("center"),
 		{
-			speed: 180,
+			speed: 200,
 			jumpForce: 360,
-			heart: 5,
+			heart: 3,
 		},
 	]);
 
-	const frango = add([
-		sprite("frango", {
+	const gatinhos = add([
+		sprite("gatinhos", {
 			animSpeed: 0.1,
 		}),
 		scale(0.1),
 		solid(),
-		"frango",
+		"gatinhos",
 	]); 
 
 
 	const score = add([
-		text(`frangos: ${0}`, 14),
-		color(rgb(0, 0, 0)),
+		text(`GATINHOS: ${0}`, 14),
+		color(rgb(250, 249, 247)),
 		layer("ui"),
 		pos(width() - 86, 24),
 		origin("center"),
@@ -148,14 +148,14 @@ scene("game", ({ level }) => {
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
 		text(player.heart, 16),
-		color(rgb(0, 0, 0)),
+		color(rgb(250, 249, 247)),
 		layer("ui"),
 		pos(56, 30),
 		origin("center"),
 	]);
 
 	player.play("idle");
-	frango.play("idle");
+	gatinhos.play("idle");
 
 	function respawn() {
 		score.value = 0;
@@ -208,10 +208,10 @@ scene("game", ({ level }) => {
 	});
 
 
-	player.collides("frango", (b) => {
+	player.collides("gatinhos", (b) => {
 		destroy(b);
 		score.value += 10;
-		score.text = `frangos: ${score.value}`;
+		score.text = `GATINHOS: ${score.value}`;
 	});
 
 	player.collides("pc", () => {
@@ -228,6 +228,7 @@ scene("lose", () => {
 		pos(width() - 300, 160),
 		origin("center"),
 	])
+
 })
 
 start("game", { level: 0 });

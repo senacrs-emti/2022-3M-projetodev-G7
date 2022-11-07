@@ -1,3 +1,6 @@
+const FLOOR_HEIGHT = 48
+const speed = 620
+
 kaboom({
 	fullscreen: true,
 	scale: 2,
@@ -6,35 +9,34 @@ kaboom({
 	clearColor: [0, 0, 0, 1],
 	global: true,
 });
+
+let isJumping = true
+
 loadSprite("bg", "testesprites/BG.png");
 
 loadSprite("ground-l", "testesprites/ground-l.png");
 loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
+loadSprite("pc", "testesprites/pc.png");
 loadSprite("heart", "testesprites/hearts_hud.png");
 loadSprite("grass", "testesprites/grass_props.png");
-loadSprite("worm", "testesprites/worm_walk_anim.png", {
-	sliceX: 6,
-	sliceY: 1,
+
+loadSprite("frango", "testesprites/frango.png", {
+	sliceX: 1.7,
 	anims: {
-		run: { from: 0, to: 5 },
+		idle: { from: 1.7, to: 1 },
+		speed: 4,
+		loop: true,
 	},
+	
 });
-loadSprite("coin", "testesprites/coin_anim_strip_6.png", {
-	sliceX: 6,
-	sliceY: 1,
+loadSprite("dino", "testesprites/will.png", {
+	sliceX: 2,
+	sliceY: 0,
 	anims: {
-		idle: { from: 0, to: 5 },
-	},
-});
-loadSprite("dino", "testesprites/DinoSprites - mort.png", {
-	sliceX: 24,
-	sliceY: 1,
-	anims: {
-		idle: { from: 0, to: 2 },
-		run: { from: 19, to: 23 },
-		dead: { from: 11, to: 16 },
+		idle: { from: 0, to: 0 },
+		run: { from: 0, to: 1, loop: true },
 	},
 });
 
@@ -47,25 +49,35 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"                             ",
-			"                             ",
-			"                        ==   ",
-			"                     =       ",
-			"        ==     ==^         ^ ",
-			"<--------------------------->",
+			"                                      	                            	         ",
+			"                                      	                            	         ",
+			"                                                                   	         ",
+			"            $    $              $          	                        	     ",
+			"          =     =       $     =   =     $ 	              	  	    	         ",
+			"       =          $   =  =        =    	=	=    =               	         ",
+			"             %  %     = %% %%%         %           <-->            	         ",
+			"<-->  <----------------------->      <---->                        	         ",
+			"                                                         <---->          	     ",
+			"                                                                    	         ",
+			"                                                                    <---->      ",
+			"                                                                   	         ",
+			"                                                                  	        <->	  ",
+			"                                                                   	         ",
+			"                                                                   	         ",
+			
 		]
 	];
 
 	const levelConfig = {
-		width: 31,
+		width: 32,
 		height: 32,
 		pos: vec2(0, height() - 78),
-		//"^": [sprite("space-invader"), scale(0.7), "space-invader"],
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"^": [sprite("grass"), "grass", "block", body()],
+		"%": [sprite("pc"), "pc", solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
+		"$": [sprite("frango"), "frango"],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
@@ -102,78 +114,36 @@ scene("game", ({ level }) => {
 		sprite("dino", {
 			animSpeed: 0.1,
 		}),
-		scale(1.4),
+		scale(1.0),
 		small(),
 		pos(map.getPos(2, -4)),
 		body(),
 		origin("center"),
 		{
-			speed: 80,
-			jumpForce: 340,
-			heart: 8,
+			speed: 180,
+			jumpForce: 360,
+			heart: 5,
 		},
 	]);
 
-	const coin = add([
-		sprite("coin", {
+	const frango = add([
+		sprite("frango", {
 			animSpeed: 0.1,
 		}),
-		scale(1),
+		scale(0.1),
 		solid(),
-		pos(
-			map.getPos(
-				Math.floor(Math.random() * 20) + 1,
-				Math.floor(Math.random() + Math.floor(Math.random() * 4) + 1),
-			),
-		),
-		origin("center"),
-		"coin",
+		"frango",
 	]); 
 
-	for (let i = 0; i < Math.floor(Math.random() * 5) + 1; i++) {
-		add([
-			sprite("crate"),
-			solid(),
-			scale(1),
-			pos(
-				map.getPos(
-					Math.floor(Math.random() * 20) + 1,
-					Math.random() + Math.floor(Math.random() * 3),
-				),
-			),
-			origin("center"),
-			"crate",
-			"block",
-		]);
-	}
 
 	const score = add([
-		text(`score: ${0}`, 18),
+		text(`frangos: ${0}`, 14),
 		color(rgb(0, 0, 0)),
 		layer("ui"),
 		pos(width() - 86, 24),
 		origin("center"),
 		{ value: 0 },
 	]);
-
-	let worms = [];
-	for (let i = 0; i < Math.floor(Math.random() * 15) + 1; i++) {
-		worms.push(
-			add([
-				sprite("worm", {
-					animSpeed: 0.1,
-				}),
-				scale(1),
-				pos(map.getPos(Math.floor(Math.random() * 20) + 1, 5)),
-				body(),
-				origin("center"),
-				{
-					speed: 10,
-				},
-				"worm",
-			]),
-		);
-	}
 
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
@@ -185,11 +155,11 @@ scene("game", ({ level }) => {
 	]);
 
 	player.play("idle");
-	coin.play("idle");
+	frango.play("idle");
 
 	function respawn() {
 		score.value = 0;
-		player.heart = 8;
+		player.heart = 5;
 		player.pos = vec2(0, 0);
 	}
 
@@ -208,6 +178,7 @@ scene("game", ({ level }) => {
 	keyPress("space", () => {
 		if (player.grounded()) {
 			player.jump(player.jumpForce);
+			isJumping = true
 		}
 	});
 
@@ -232,34 +203,31 @@ scene("game", ({ level }) => {
 
 	player.action(() => {
 		if (player.pos.y >= 800 || player.heart <= 0) {
-			respawn();
+			go("lose")
 		}
 	});
 
-	player.collides("coin", (b) => {
+
+	player.collides("frango", (b) => {
 		destroy(b);
 		score.value += 10;
-		score.text = `score: ${score.value}`;
+		score.text = `frangos: ${score.value}`;
 	});
 
-	player.collides("worm", () => {
+	player.collides("pc", () => {
 		camShake(8);
 		player.heart--;
 	});
 
-	worms.forEach((worm) => {
-		worm.action(() => {
-			worm.move(worm.speed, 0);
-			if (worm.curAnim() !== "run") {
-				worm.play("run");
-			}
-		});
-
-		worm.collides("block", () => {
-			worm.flipX(-1);
-			worm.speed = -worm.speed;
-		});
-	});
 });
+
+scene("lose", () => {
+
+	add([
+		text("Game Over - CTRL+R para Jogar de Novo!"),
+		pos(width() - 300, 160),
+		origin("center"),
+	])
+})
 
 start("game", { level: 0 });
