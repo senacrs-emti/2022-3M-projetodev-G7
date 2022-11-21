@@ -90,7 +90,7 @@ scene("game", ({ level }) => {
 		body(),
 		origin("center"),
 		{
-			speed: 100,
+			speed: 125,
 			jumpForce: 360,
 			heart: 3,
 		},

@@ -18,7 +18,11 @@ loadSprite("ground-l", "testesprites/ground-l.png");
 loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
-loadSprite("pc", "testesprites/pc.png");
+
+loadSprite("fio", "testesprites/fio.gif", {
+
+});
+
 loadSprite("heart", "testesprites/hearts_hud.png");
 
 loadSprite("gatinhos", "testesprites/gatinhos.png", {
@@ -55,13 +59,18 @@ scene("game", ({ level }) => {
 			"                  =                                                              ",
 			"                       =                                                         ",
 			"                         =           =      %                                    ",
-			"                   %%%%%%%%   $==  =       ==                                    ",
-			"                   <------>   =%%  %                                             ",
-			"                             <------>                                            ",
-			"                                                                                 ",
-			"                                                                                 ",
-			"                                                                                 ",
-			
+			"                   %%%%%%%%   $==  =       ==  =                                 ",
+			"                   <------>   =%%  %             $                               ",
+			"                             <------>            $                               ",
+			"                                                 $                               ",
+			"                                                 $                               ",
+			"                                                 $                               ",
+			"                                                 $                               ",
+			"                                                 $                               ",
+			"                                                 $                               ",
+			"                                                 $                               ",
+			"                                               <-->                              ",
+		
 		]
 	];
 
@@ -72,7 +81,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("pc"), "pc", solid(), scale(2)],
+		"%": [sprite("fio"), "fio", solid(), scale(1)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("gatinhos"), "gatinhos"],
 	};
@@ -116,6 +125,12 @@ scene("game", ({ level }) => {
 	add([
 		text("Bem-vindo ao Senac Run!"),
 		pos(width() - 400, 180),
+		origin("center"),
+	])
+
+	add([
+		text("Pule !"),
+		pos(width() - -950, 400),
 		origin("center"),
 	])
 
@@ -179,7 +194,7 @@ scene("game", ({ level }) => {
 		score.text = `GATINHOS: ${score.value}`;
 	});
 
-	player.collides("pc", () => {
+	player.collides("fio", () => {
 		camShake(8);
 		player.heart--;
 	});
