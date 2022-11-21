@@ -48,7 +48,7 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"%             %                                                                  ",
+			"%            %                                                                   ",
 			"<------------>                                                                   ",
 			"               =                                                                 ",
 			"                =    $$                                                          ",
@@ -72,7 +72,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("pc"), "pc", solid()],
+		"%": [sprite("pc"), "pc", solid(), scale(2)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("gatinhos"), "gatinhos"],
 	};
