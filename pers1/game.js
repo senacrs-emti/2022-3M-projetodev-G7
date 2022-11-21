@@ -48,21 +48,19 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"                                      	                            	         ",
-			"                                      	                            	         ",
-			"                                                                   	         ",
-			"            $    $              $          	                        	     ",
-			"          =    =       $     =   =     $ 	              	  	    	         ",
-			"       =          $   =  =        =    	=	=    =               	         ",
-			"             %  %     = %% %%%         %           <-->            	         ",
-			"<-->  <----------------------->      <---->                        	         ",
-			"                                                         <---->          	     ",
-			"                                                                    	         ",
-			"                                                                    <---->      ",
-			"                                                                   	         ",
-			"                                                                  	        <->	 ",
-			"                                                                   	         ",
-			"                                                                   	         ",
+			"%             %                                                                  ",
+			"<------------>                                                                   ",
+			"               =                                                                 ",
+			"                =    $$                                                          ",
+			"                  =                                                              ",
+			"                       =                                                         ",
+			"                         =           =      %                                    ",
+			"                   %%%%%%%%   $==  =       ==                                    ",
+			"                   <------>   =%%  %                                             ",
+			"                             <------>                                            ",
+			"                                                                                 ",
+			"                                                                                 ",
+			"                                                                                 ",
 			
 		]
 	];
@@ -90,7 +88,7 @@ scene("game", ({ level }) => {
 		body(),
 		origin("center"),
 		{
-			speed: 200,
+			speed: 185,
 			jumpForce: 360,
 			heart: 3,
 		},
@@ -114,6 +112,12 @@ scene("game", ({ level }) => {
 		origin("center"),
 		{ value: 0 },
 	]);
+
+	add([
+		text("Bem-vindo ao Senac Run!"),
+		pos(width() - 400, 180),
+		origin("center"),
+	])
 
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
