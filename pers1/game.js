@@ -1,6 +1,3 @@
-const FLOOR_HEIGHT = 48
-const speed = 620
-
 kaboom({
 	fullscreen: true,
 	scale: 2,
@@ -19,9 +16,12 @@ loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
 
-loadSprite("fio", "testesprites/fio.gif", {
-
-});
+loadSprite("pc", "testesprites/pc.png", {
+	sliceX: 5,
+	anims: {
+		"idle": { from: 0, to: 5, speed: 5, loop: true }
+	}		
+})
 
 loadSprite("heart", "testesprites/hearts_hud.png");
 
@@ -44,32 +44,32 @@ loadSprite("sandro", "testesprites/sandro.png", {
 });
 
 scene("game", ({ level }) => {
-	gravity(980);
+	gravity(960);
 	layers(["bg", "obj", "ui"], "obj");
 	camIgnore(["ui", "bg"]);
 
-	add([sprite("bg"), scale(width() / 1600, height() / 900), layer("bg")]);
+	add([sprite("bg"), scale(width() / 1000, height() / 650), layer("bg")]);
 
 	const maps = [
 		[
 			"%            %                                                                   ",
-			"<------------>                                                                   ",
-			"               =                                                                 ",
-			"                =    $$                                                          ",
-			"                  =                                                              ",
-			"                       =                                                         ",
-			"                         =           =      %                                    ",
-			"                   %%%%%%%%   $==  =       ==  =                                 ",
-			"                   <------>   =%%  %             $                               ",
+			"<------------>  =                                                                ",
+			"                   = =    =        $   =                                         ",
+			"                   %%%%%%%%   $==  ==      ==  =                                 ",
+			"                   <------>   =$%% %=            $                               ",
 			"                             <------>            $                               ",
-			"                                                 $                               ",
-			"                                                 $                               ",
-			"                                                 $                               ",
-			"                                                 $                               ",
-			"                                                 $                               ",
-			"                                                 $                               ",
-			"                                                 $                               ",
-			"                                               <-->                              ",
+			"                                                 $  $                            ",
+			"                                               <--->                             ",
+			"                                      %%%                                        ",
+			"                                      ===                                        ",
+			"                                            =                                    ",
+			"                                     =<->=                                       ",
+			"                                              <-------->                         ",
+			"                                                                                 ",
+			"                                                                                 ",
+			"                                                                                 ",
+			"                                                                                 ",
+			"                                                                                 ",
 		
 		]
 	];
@@ -81,7 +81,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("fio"), "fio", solid(), scale(1)],
+		"%": [sprite("pc"), "pc", solid(), scale(2)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("gatinhos"), "gatinhos"],
 	};
@@ -102,6 +102,15 @@ scene("game", ({ level }) => {
 			heart: 3,
 		},
 	]);
+
+	const pc = add([
+		sprite("pc", {
+			animSpeed: 1,
+		}),
+		solid(),
+		"pc",
+	]); 
+
 
 	const gatinhos = add([
 		sprite("gatinhos", {
@@ -145,7 +154,7 @@ scene("game", ({ level }) => {
 
 	player.play("idle");
 	gatinhos.play("idle");
-
+	pc.play("idle");
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {
@@ -194,7 +203,7 @@ scene("game", ({ level }) => {
 		score.text = `GATINHOS: ${score.value}`;
 	});
 
-	player.collides("fio", () => {
+	player.collides("pc", () => {
 		camShake(8);
 		player.heart--;
 	});
