@@ -15,6 +15,9 @@ loadSprite("ground-l", "testesprites/ground-l.png");
 loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
+loadSprite("portal", "testesprites/portal.png", {
+	sliceX: 4,
+});
 
 loadSprite("pc", "testesprites/pc.png", {
 	sliceX: 5,
@@ -48,7 +51,7 @@ scene("game", ({ level }) => {
 	layers(["bg", "obj", "ui"], "obj");
 	camIgnore(["ui", "bg"]);
 
-	add([sprite("bg"), scale(width() / 1000, height() / 650), layer("bg")]);
+	add([sprite("bg"), scale(width() / 1600, height() / 900), layer("bg")]);
 
 	const maps = [
 		[
@@ -58,13 +61,13 @@ scene("game", ({ level }) => {
 			"                   %%%%%%%%   $==  ==      ==  =                                 ",
 			"                   <------>   =$%% %=            $                               ",
 			"                             <------>            $                               ",
-			"                                                 $  $                            ",
-			"                                               <--->                             ",
-			"                                      %%%                                        ",
-			"                                      ===                                        ",
-			"                                            =                                    ",
-			"                                     =<->=                                       ",
-			"                                              <-------->                         ",
+			"#                                                $                               ",
+			"      =     =        %                         <--->                             ",
+			"                <---->                %%%    $                                   ",
+			"<--->                   =             ===                                        ",
+			"                          =                 =                                    ",
+			"                            =        =<->=                                       ",
+			"                              <-->                                               ",
 			"                                                                                 ",
 			"                                                                                 ",
 			"                                                                                 ",
@@ -81,9 +84,10 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("pc"), "pc", solid(), scale(2)],
+		"%": [sprite("pc"), "pc", solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("gatinhos"), "gatinhos"],
+		"#": [sprite("portal"), "portal", solid(), scale(0.25)],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
@@ -139,7 +143,7 @@ scene("game", ({ level }) => {
 
 	add([
 		text("Pule !"),
-		pos(width() - -950, 400),
+		pos(width() - -950, 300),
 		origin("center"),
 	])
 
@@ -219,5 +223,26 @@ scene("lose", () => {
 	])
 
 })
+
+scene("win", ({ score }) => {
+
+	add([
+		text(`Você conseguiu ${score} gatinhos!!!`, {
+			width: width(),
+		}),
+		pos(12),
+	])
+
+	onKeyPress(start)
+
+})
+
+function start() {
+	go("game", {
+		levelIdx: 0,
+		score: 0,
+	})
+}
+
 
 start("game", { level: 0 });
