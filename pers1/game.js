@@ -212,6 +212,21 @@ scene("game", ({ level }) => {
 		player.heart--;
 	});
 
+	player.collides("portal", () => {
+		camShake(8);
+		go("win", {score: score});
+	});
+
+	scene("win", ({score}) => {
+
+		add([
+			text(`Voce venceu! Ganhou ${score.value} gatinhos - CTRL+R para Jogar de Novo!`),
+			pos(width() - 300, 160),
+			origin("center"),
+		])
+		
+	})
+
 });
 
 scene("lose", () => {
@@ -223,26 +238,5 @@ scene("lose", () => {
 	])
 
 })
-
-scene("win", ({ score }) => {
-
-	add([
-		text(`Você conseguiu ${score} gatinhos!!!`, {
-			width: width(),
-		}),
-		pos(12),
-	])
-
-	onKeyPress(start)
-
-})
-
-function start() {
-	go("game", {
-		levelIdx: 0,
-		score: 0,
-	})
-}
-
 
 start("game", { level: 0 });
