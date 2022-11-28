@@ -20,7 +20,7 @@ loadSprite("portal", "testesprites/portal.png", {
 });
 
 loadSprite("pc", "testesprites/pc.png", {
-	sliceX: 5,
+	sliceX: 1,
 	anims: {
 		"idle": { from: 0, to: 5, speed: 5, loop: true }
 	}		
@@ -58,16 +58,16 @@ scene("game", ({ level }) => {
 			"             $  <--->                       =  <->  $                            ",
 			"             =             $%               $       = %                          ",
 			"             $           <-=->              =         = $                        ",
-			"             =                   % $        $           = %                      ",
+			"             =                   % $%       $           = %                      ",
 			"         $                      <-=->       =             = $                    ",
 			"         = $                           $% $%                =                    ",
 			"           = $                         <-=->                                     ",
 			"             =                                                   % $             ",
 			"                                                               <-=->             ",
-			"               =                                                                 ",
+			"               =                                                      $          ",
 			"            $=                                                        =          ",
 			"           =                                                                     ",
-			"   $   $ =                                                                       ",
+			"   $   $ =                                                                   $$$ ",
 			" <->  <->                                                              <--=--=-> ",
 			"                                                                   #             ",
 			"                                                                                 ",
