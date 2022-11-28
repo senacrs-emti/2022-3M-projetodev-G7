@@ -18,10 +18,10 @@ loadSprite("crate", "testesprites/Crate.png");
 loadSprite("portal", "testesprites/pirtol.png", {
 });
 
-loadSprite("pc", "testesprites/pc.png", {
-	sliceX: 5,
+loadSprite("teste", "testesprites/teste.png", {
+	sliceX: 1,
 	anims: {
-		"idle": { from: 0, to: 5, speed: 5, loop: true }
+		"idle": { from: 0, to: 1, speed: 5, loop: true }
 	}		
 })
 
@@ -54,20 +54,20 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"%            %                                                                   ",
-			"<------------>  =                                                                ",
-			"                   = =    =        $   =                                         ",
-			"                   %%%%%%%%   $==  ==      ==  =                                 ",
-			"                   <------>   =$%% %=            $                               ",
-			"                             <------>            $                               ",
-			"#                                                $                               ",
-			"      =     =        %                         <--->                             ",
-			"                <---->                %%%    $                                   ",
-			"<--->                   =             ===                                        ",
-			"                          =                 =                                    ",
-			"                            =        =<->=                                       ",
-			"                              <-->                                               ",
+			"%$=$%   ]]] =%        =  $                                                       ",
+			"<------------>  =     =  $                                                       ",
+			"                   = =    =        $   =  $                                      ",
+			"                   %%%%%  %   $==  ==      =                                     ",
+			"                   <------>   =$%% %=        $                        $$         ",
+			"                             <------>         =           $         =   = $      ",
+			"                                                       =   =     $=%%%     =     ",
+			"                                                 %  =%          <---->           ",
+			"                                                 <---->                          ",
 			"                                                                                 ",
+			"                                                                            $ %% ",
+			"                                                                             <-> ",
+			"                                                                                 ",
+			"                                                                         #       ",
 			"                                                                                 ",
 			"                                                                                 ",
 			"                                                                                 ",
@@ -83,7 +83,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("pc"), "pc", solid()],
+		"%": [sprite("teste"), "teste", solid(), scale(1)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("cafe"), "cafe", scale(0.7)],
 		"#": [sprite("portal"), "portal", solid(), scale(0.45)],
@@ -102,16 +102,16 @@ scene("game", ({ level }) => {
 		{
 			speed: 125,
 			jumpForce: 360,
-			heart: 3,
+			heart: 5,
 		},
 	]);
 
-	const pc = add([
-		sprite("pc", {
+	const teste = add([
+		sprite("teste", {
 			animSpeed: 1,
 		}),
 		solid(),
-		"pc",
+		"teste",
 	]); 
 
 
@@ -123,7 +123,6 @@ scene("game", ({ level }) => {
 		solid(),
 		"cafe",
 	]); 
-
 
 	const score = add([
 		text(`CAFEZES: ${0}`, 14),
@@ -157,7 +156,7 @@ scene("game", ({ level }) => {
 
 	player.play("idle");
 	cafe.play("idle");
-	pc.play("idle");
+	teste.play("idle");
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {
@@ -206,7 +205,7 @@ scene("game", ({ level }) => {
 		score.text = `CAFEZES: ${score.value}`;
 	});
 
-	player.collides("pc", () => {
+	player.collides("teste", () => {
 		camShake(8);
 		player.heart--;
 	});

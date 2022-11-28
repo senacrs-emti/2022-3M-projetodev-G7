@@ -55,21 +55,21 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"%            %                                                                   ",
-			"<------------>  =                                                                ",
-			"                   = =    =        $   =                                         ",
-			"                   %%%%%%%%   $==  ==      ==  =                                 ",
-			"                   <------>   =$%% %=            $                               ",
-			"                             <------>            $                               ",
-			"#                                                $                               ",
-			"      =     =        %                         <--->                             ",
-			"                <---->                %%%    $                                   ",
-			"<--->                   =             ===                                        ",
-			"                          =                 =                                    ",
-			"                            =        =<->=                                       ",
-			"                              <-->                                               ",
-			"                                                                                 ",
-			"                                                                                 ",
+			"             $  <--->                       =  <->  $                            ",
+			"             =             $%               $       = %                          ",
+			"             $           <-=->              =         = $                        ",
+			"             =                   % $        $           = %                      ",
+			"         $                      <-=->       =             = $                    ",
+			"         = $                           $% $%                =                    ",
+			"           = $                         <-=->                                     ",
+			"             =                                                   % $             ",
+			"                                                               <-=->             ",
+			"               =                                                                 ",
+			"            $=                                                        =          ",
+			"           =                                                                     ",
+			"   $   $ =                                                                       ",
+			" <->  <->                                                              <--=--=-> ",
+			"                                                                   #             ",
 			"                                                                                 ",
 			"                                                                                 ",
 			"                                                                                 ",
@@ -101,9 +101,9 @@ scene("game", ({ level }) => {
 		body(),
 		origin("center"),
 		{
-			speed: 165,
+			speed: 145,
 			jumpForce: 360,
-			heart: 3,
+			heart: 4,
 		},
 	]);
 
@@ -128,7 +128,7 @@ scene("game", ({ level }) => {
 
 	const score = add([
 		text(`FRANGOZAS: ${0}`, 14),
-		color(rgb(250, 249, 247)),
+		color(rgb(0, 0, 0)),
 		layer("ui"),
 		pos(width() - 86, 24),
 		origin("center"),
@@ -137,20 +137,23 @@ scene("game", ({ level }) => {
 
 	add([
 		text("Bem-vindo ao Senac Run!"),
-		pos(width() - 400, 180),
+		pos(width() - 380, 290 ),
+		color(rgb(0, 0, 0)),
 		origin("center"),
 	])
 
 	add([
-		text("Pule !"),
-		pos(width() - -950, 300),
-		origin("center"),
+		text("Pule! >"),
+		pos(width() - 120, 150 ),
+		color(rgb(0, 0, 0)),
+ 		origin("center"),
 	])
+
 
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
 		text(player.heart, 16),
-		color(rgb(250, 249, 247)),
+		color(rgb(0, 0, 0)),
 		layer("ui"),
 		pos(56, 30),
 		origin("center"),
@@ -222,7 +225,7 @@ scene("game", ({ level }) => {
 		add([
 			text(`Voce conseguiu! Venceu e pode degustar esse tanto ${score.value} de franguinhos
 			
-			- CTRL+R para Jogar de Novo!`),
+			  CTRL+R para Jogar de Novo!`),
 			pos(width() - 300, 160),
 			origin("center"),
 		])
