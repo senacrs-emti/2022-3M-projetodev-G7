@@ -1,6 +1,3 @@
-const FLOOR_HEIGHT = 48
-const speed = 620
-
 kaboom({
 	fullscreen: true,
 	scale: 2,
@@ -18,13 +15,22 @@ loadSprite("ground-l", "testesprites/ground-l.png");
 loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
-loadSprite("pc", "testesprites/pc.png");
+loadSprite("portal", "testesprites/pirtol.png", {
+});
+
+loadSprite("pc", "testesprites/pc.png", {
+	sliceX: 5,
+	anims: {
+		"idle": { from: 0, to: 5, speed: 5, loop: true }
+	}		
+})
+
 loadSprite("heart", "testesprites/hearts_hud.png");
 
 loadSprite("cafe", "testesprites/cafe.png", {
 	sliceX: 1,
 	anims: {
-		idle: { from: 1, to: 1 },
+		idle: { from: 3, to: 0 },
 		speed: 4,
 		loop: true,
 	},
@@ -40,7 +46,7 @@ loadSprite("will", "testesprites/will.png", {
 });
 
 scene("game", ({ level }) => {
-	gravity(980);
+	gravity(960);
 	layers(["bg", "obj", "ui"], "obj");
 	camIgnore(["ui", "bg"]);
 
@@ -48,22 +54,25 @@ scene("game", ({ level }) => {
 
 	const maps = [
 		[
-			"                                      	                            	         ",
-			"                                      	                            	         ",
-			"                                                                   	         ",
-			"            $    $              $          	                        	     ",
-			"          =    =       $     =   =     $ 	              	  	    	         ",
-			"       =          $   =  =        =    	=	=    =               	         ",
-			"             %  %     = %% %%%         %           <-->            	         ",
-			"<-->  <----------------------->      <---->                        	         ",
-			"                                                         <---->          	     ",
-			"                                                                    	         ",
-			"                                                                    <---->      ",
-			"                                                                   	         ",
-			"                                                                  	        <->	 ",
-			"                                                                   	         ",
-			"                                                                   	         ",
-			
+			"%            %                                                                   ",
+			"<------------>  =                                                                ",
+			"                   = =    =        $   =                                         ",
+			"                   %%%%%%%%   $==  ==      ==  =                                 ",
+			"                   <------>   =$%% %=            $                               ",
+			"                             <------>            $                               ",
+			"#                                                $                               ",
+			"      =     =        %                         <--->                             ",
+			"                <---->                %%%    $                                   ",
+			"<--->                   =             ===                                        ",
+			"                          =                 =                                    ",
+			"                            =        =<->=                                       ",
+			"                              <-->                                               ",
+			"                                                                                 ",
+			"                                                                                 ",
+			"                                                                                 ",
+			"                                                                                 ",
+			"                                                                                 ",
+		
 		]
 	];
 
@@ -76,7 +85,8 @@ scene("game", ({ level }) => {
 		">": [sprite("ground-r"), "block", solid()],
 		"%": [sprite("pc"), "pc", solid()],
 		"=": [sprite("crate"), "crate", "block", solid()],
-		"$": [sprite("cafe"), "cafe", scale(0.6)],
+		"$": [sprite("cafe"), "cafe", scale(0.7)],
+		"#": [sprite("portal"), "portal", solid(), scale(0.45)],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
@@ -96,10 +106,20 @@ scene("game", ({ level }) => {
 		},
 	]);
 
+	const pc = add([
+		sprite("pc", {
+			animSpeed: 1,
+		}),
+		solid(),
+		"pc",
+	]); 
+
+
 	const cafe = add([
 		sprite("cafe", {
 			animSpeed: 0.1,
 		}),
+		scale(0.1),
 		solid(),
 		"cafe",
 	]); 
@@ -114,6 +134,18 @@ scene("game", ({ level }) => {
 		{ value: 0 },
 	]);
 
+	add([
+		text("Bem-vindo ao Senac Run!"),
+		pos(width() - 400, 180),
+		origin("center"),
+	])
+
+	add([
+		text("Pule !"),
+		pos(width() - -950, 300),
+		origin("center"),
+	])
+
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
 		text(player.heart, 16),
@@ -125,7 +157,7 @@ scene("game", ({ level }) => {
 
 	player.play("idle");
 	cafe.play("idle");
-
+	pc.play("idle");
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {
@@ -178,6 +210,21 @@ scene("game", ({ level }) => {
 		camShake(8);
 		player.heart--;
 	});
+
+	player.collides("portal", () => {
+		camShake(8);
+		go("win", {score: score});
+	});
+
+	scene("win", ({score}) => {
+
+		add([
+			text(`Voce venceu! Ganhou esse tantao de ${score.value} cafezes - CTRL+R para Jogar de Novo!`),
+			pos(width() - 300, 160),
+			origin("center"),
+		])
+		
+	})
 
 });
 
