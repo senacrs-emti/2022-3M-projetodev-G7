@@ -20,10 +20,7 @@ loadSprite("portal", "testesprites/portal.png", {
 });
 
 loadSprite("pc", "testesprites/pc.png", {
-	sliceX: 5,
-	anims: {
-		"idle": { from: 0, to: 5, speed: 5, loop: true }
-	}		
+	sliceX: 1,
 })
 
 loadSprite("heart", "testesprites/hearts_hud.png");
@@ -84,7 +81,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("pc"), "pc", solid()],
+		"%": [sprite("pc"), "pc", solid(), scale(0.08)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("gatinhos"), "gatinhos"],
 		"#": [sprite("portal"), "portal", solid(), scale(0.25)],
@@ -106,15 +103,6 @@ scene("game", ({ level }) => {
 			heart: 3,
 		},
 	]);
-
-	const pc = add([
-		sprite("pc", {
-			animSpeed: 1,
-		}),
-		solid(),
-		"pc",
-	]); 
-
 
 	const gatinhos = add([
 		sprite("gatinhos", {
@@ -158,7 +146,6 @@ scene("game", ({ level }) => {
 
 	player.play("idle");
 	gatinhos.play("idle");
-	pc.play("idle");
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {

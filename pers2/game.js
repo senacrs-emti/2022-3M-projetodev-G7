@@ -15,14 +15,12 @@ loadSprite("ground-l", "testesprites/ground-l.png");
 loadSprite("ground-r", "testesprites/ground-r.png");
 loadSprite("ground", "testesprites/ground.png");
 loadSprite("crate", "testesprites/Crate.png");
-loadSprite("portal", "testesprites/pirtol.png", {
+loadSprite("portal", "testesprites/portal.png", {
+	sliceX: 4,
 });
 
 loadSprite("teste", "testesprites/teste.png", {
 	sliceX: 1,
-	anims: {
-		"idle": { from: 0, to: 1, speed: 5, loop: true }
-	}		
 })
 
 loadSprite("heart", "testesprites/hearts_hud.png");
@@ -83,7 +81,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("teste"), "teste", solid(), scale(1)],
+		"%": [sprite("teste"), "teste", solid(), scale(0.08)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("cafe"), "cafe", scale(0.7)],
 		"#": [sprite("portal"), "portal", solid(), scale(0.45)],
@@ -105,15 +103,6 @@ scene("game", ({ level }) => {
 			heart: 5,
 		},
 	]);
-
-	const teste = add([
-		sprite("teste", {
-			animSpeed: 1,
-		}),
-		solid(),
-		"teste",
-	]); 
-
 
 	const cafe = add([
 		sprite("cafe", {
@@ -156,7 +145,6 @@ scene("game", ({ level }) => {
 
 	player.play("idle");
 	cafe.play("idle");
-	teste.play("idle");
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {
