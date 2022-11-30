@@ -84,7 +84,7 @@ scene("game", ({ level }) => {
 		"%": [sprite("teste"), "teste", solid(), scale(0.08)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("cafe"), "cafe", scale(0.7)],
-		"#": [sprite("portal"), "portal", solid(), scale(0.45)],
+		"#": [sprite("portal"), "portal", solid(), scale(0.35)],
 	};
 
 	const map = addLevel(maps[level], levelConfig);
@@ -125,6 +125,12 @@ scene("game", ({ level }) => {
 	add([
 		text("Bem-vindo ao Senac Run!"),
 		pos(width() - 400, 180),
+		origin("center"),
+	])
+
+	add([
+		text("Cuidado com o Homem de Ferro"),
+		pos(width() - 400, 160),
 		origin("center"),
 	])
 

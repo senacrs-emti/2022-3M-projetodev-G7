@@ -21,9 +21,6 @@ loadSprite("portal", "testesprites/portal.png", {
 
 loadSprite("pc", "testesprites/pc.png", {
 	sliceX: 1,
-	anims: {
-		"idle": { from: 0, to: 5, speed: 5, loop: true }
-	}		
 })
 
 loadSprite("heart", "testesprites/hearts_hud.png");
@@ -67,7 +64,7 @@ scene("game", ({ level }) => {
 			"               =                                                      $          ",
 			"            $=                                                        =          ",
 			"           =                                                                     ",
-			"   $   $ =                                                                   $$$ ",
+			"   $  $ =                                                                    $$$ ",
 			" <->  <->                                                              <--=--=-> ",
 			"                                                                   #             ",
 			"                                                                                 ",
@@ -84,7 +81,7 @@ scene("game", ({ level }) => {
 		"<": [sprite("ground-l"), "block", solid()],
 		"-": [sprite("ground"), solid()],
 		">": [sprite("ground-r"), "block", solid()],
-		"%": [sprite("pc"), "pc", solid()],
+		"%": [sprite("pc"), "pc", solid(), scale(0.12)],
 		"=": [sprite("crate"), "crate", "block", solid()],
 		"$": [sprite("frango"), "frango", scale(0.7)],
 		"#": [sprite("portal"), "portal", solid(), scale(0.25)],
@@ -106,15 +103,6 @@ scene("game", ({ level }) => {
 			heart: 4,
 		},
 	]);
-
-	const pc = add([
-		sprite("pc", {
-			animSpeed: 1,
-		}),
-		solid(),
-		"pc",
-	]); 
-
 
 	const frango = add([
 		sprite("frango", {
@@ -143,6 +131,14 @@ scene("game", ({ level }) => {
 	])
 
 	add([
+		text("Cuidado com o Linux"),
+		pos(width() - 380, 320 ),
+		color(rgb(0, 0, 0)),
+		origin("center"),
+	])
+
+
+	add([
 		text("Pule! >"),
 		pos(width() - 120, 150 ),
 		color(rgb(0, 0, 0)),
@@ -161,7 +157,6 @@ scene("game", ({ level }) => {
 
 	player.play("idle");
 	frango.play("idle");
-	pc.play("idle");
 
 	keyDown(["left", "right"], () => {
 		if (player.grounded() && player.curAnim() !== "run") {

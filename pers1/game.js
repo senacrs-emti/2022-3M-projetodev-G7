@@ -130,6 +130,12 @@ scene("game", ({ level }) => {
 	])
 
 	add([
+		text("Cuidado com a Nirvana"),
+		pos(width() - 400, 160),
+		origin("center"),
+	])
+
+	add([
 		text("Pule !"),
 		pos(width() - -950, 300),
 		origin("center"),
