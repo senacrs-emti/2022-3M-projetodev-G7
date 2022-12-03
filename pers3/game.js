@@ -115,7 +115,7 @@ scene("game", ({ level }) => {
 
 
 	const score = add([
-		text(`FRANGOZAS: ${0}`, 14),
+		text(`FRANGOS: ${0}`, 14),
 		color(rgb(0, 0, 0)),
 		layer("ui"),
 		pos(width() - 86, 24),
@@ -202,7 +202,7 @@ scene("game", ({ level }) => {
 	player.collides("frango", (b) => {
 		destroy(b);
 		score.value += 1;
-		score.text = `FRANGOZAS: ${score.value}`;
+		score.text = `FRANGOS: ${score.value}`;
 	});
 
 	player.collides("pc", () => {

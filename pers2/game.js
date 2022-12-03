@@ -51,21 +51,21 @@ scene("game", ({ level }) => {
 	add([sprite("bg"), scale(width() / 1600, height() / 900), layer("bg")]);
 
 	const maps = [
-		[
-			"%$=$%   ]]] =%        =  $                                                       ",
-			"<------------>  =     =  $                                                       ",
-			"                   = =    =        $   =  $                                      ",
-			"                   %%%%%  %   $==  ==      =                                     ",
-			"                   <------>   =$%% %=        $                        $$         ",
-			"                             <------>         =           $         =   = $      ",
-			"                                                       =   =     $=%%%     =     ",
-			"                                                 %  =%          <---->           ",
-			"                                                 <---->                          ",
+		[ 
+			"%  $=$%    $  =   <-%->                     =   $$%       %                      ",
+			"<--------->  =           =                  $   <--=>   =                        ",
+			"                         $                  =           $                        ",
+			"                         =           %%     $           =                        ",
+			"                                     ==     =           $                        ",
+			"                                 $$       $             =                        ",
+			"                               =   <-==->   =                                    ",
+			"                             $=%%%%                                              ",
+			"                         =   <---->                     $                        ",
+			"                                                       <->   $                   ",
+			"                                                             =                   ",
 			"                                                                                 ",
-			"                                                                            $ %% ",
-			"                                                                             <-> ",
+			"                                                                 #               ",
 			"                                                                                 ",
-			"                                                                         #       ",
 			"                                                                                 ",
 			"                                                                                 ",
 			"                                                                                 ",
@@ -114,7 +114,7 @@ scene("game", ({ level }) => {
 	]); 
 
 	const score = add([
-		text(`CAFEZES: ${0}`, 14),
+		text(`CAFES: ${0}`, 14),
 		color(rgb(250, 249, 247)),
 		layer("ui"),
 		pos(width() - 86, 24),
@@ -134,11 +134,7 @@ scene("game", ({ level }) => {
 		origin("center"),
 	])
 
-	add([
-		text("Pule !"),
-		pos(width() - -950, 300),
-		origin("center"),
-	])
+
 
 	add([sprite("heart"),scale(2), layer("ui"), pos(12, 12)])
 	const heart = add([
@@ -196,7 +192,7 @@ scene("game", ({ level }) => {
 	player.collides("cafe", (b) => {
 		destroy(b);
 		score.value += 1;
-		score.text = `CAFEZES: ${score.value}`;
+		score.text = `CAFES: ${score.value}`;
 	});
 
 	player.collides("teste", () => {
@@ -212,7 +208,7 @@ scene("game", ({ level }) => {
 	scene("win", ({score}) => {
 
 		add([
-			text(`Voce venceu! Ganhou esse tantao de ${score.value} cafezes - CTRL+R para Jogar de Novo!`),
+			text(`Voce venceu! Ganhou esse tantao de ${score.value} cafes - CTRL+R para Jogar de Novo!`),
 			pos(width() - 300, 160),
 			origin("center"),
 		])
